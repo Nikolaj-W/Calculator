@@ -87,18 +87,21 @@ function openEx(){
     let extendedContainer = document.getElementById("extendedKeypadContainer");
     let standertContainer = document.getElementById("numericKeypadContainer");
     let equation = document.getElementById("equation");
+    let numberZero = document.getElementById("id-0;");
     if (standart == true){
         let calculator = document.getElementById("calculator-standart");
         calculator.id = "calculator-extended";
-        extendedContainer.setAttribute("style","display:grid;")
+        extendedContainer.setAttribute("style","display:grid;");
         standertContainer.setAttribute("style","padding:0 10px 10px 0;");
-        equation.setAttribute("style","with:265;")
+        equation.setAttribute("style","with:265;");
+        equation.setAttribute("style","width: 82px");
     }else{
         let calculator = document.getElementById("calculator-extended");
         calculator.id = "calculator-standart";
         extendedContainer.setAttribute("style","display:none;");
         standertContainer.setAttribute("style","padding:0 10px 10px 10px;");
-        equation.setAttribute("style","with:166;")
+        equation.setAttribute("style","with:166;");
+        equation.setAttribute("style","width: 85px");
     }
     standart = !standart;
 }
