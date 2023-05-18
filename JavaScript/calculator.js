@@ -18,7 +18,6 @@ function main(){
 }
 //to add Characters to the global:equation
 function addToEquation(element){
-    console.log(standard)
     if ((equation.length <= 19 && standard) || (equation.length <= 53 && !standard)) {
         if (element.className === "mathOperator") {
             if (!checkLastChar(element.textContent)){
@@ -43,7 +42,7 @@ function addToEquation(element){
 function keyboardInput(event){
     const keyInput = event.key;
     if ((equation.length <= 19 && standard) || (equation.length <= 53 && !standard)) {
-        //console.log(keyInput);
+        console.log(keyInput);
         if ((Number(keyInput) >= 0 && Number(keyInput) <= 9) && keyInput !== 'Backspace') {
             removeStartingZero();
             equation += Number(keyInput);
@@ -53,7 +52,7 @@ function keyboardInput(event){
             document.getElementById("equation").textContent = equation;
         }
         if (keyInput === "+" || keyInput === "-" || keyInput === "*" || keyInput === "/") {
-            if (checkLastChar(keyInput === "-" ? "−" : keyInput === "*" ? "×" : keyInput === "/" ? "÷" : "+") === false) {
+            if (!checkLastChar(keyInput === "-" ? "−" : keyInput === "*" ? "×" : keyInput === "/" ? "÷" : "+")) {
                 if (ans !== undefined) {
                     equation += "Ans" + (keyInput === "-" ? "−" : keyInput === "*" ? "×" : keyInput === "/" ? "÷" : "+");
                 } else {
@@ -68,6 +67,12 @@ function keyboardInput(event){
         if (keyInput === "Control") {
             openEx();
         }
+        if (keyInput === ","){
+            if (!checkLastChar(keyInput) && equation !== "0"){
+                equation += ",";
+                document.getElementById("equation").textContent = equation;
+            }
+        }
     }
     if (keyInput === 'Backspace') {
         equation = equation.slice(0, -1);
@@ -80,9 +85,10 @@ function keyboardInput(event){
 //execute the equation
 function solveEquation(){
     equation = equation.replaceAll("×", "*").replaceAll("÷", "/").replaceAll("−", "-").replaceAll("Ans", ans);
-    if (!equation.includes("*") && !equation.includes("/") && !equation.includes("+") && !equation.includes("-")) {
+    if (!equation.includes("*") && !equation.includes("/") && !equation.includes("+") && !equation.includes("-") && equation.includes(",")) {
         document.getElementById("equation").textContent = equation === "" ? ans : equation !== "" ? equation : "0";
     } else {
+        equation = equation.replaceAll(",", ".");
         document.getElementById("equation").textContent =eval(equation);
         ans = eval(equation);
         equation = "";
@@ -92,7 +98,7 @@ function removeStartingZero(){
     equation = (equation === "0") ? "" : equation;
 }
 function checkLastChar(lastChar) {
-    let valid = (equation.slice(-1) === "+" || equation.slice(-1) === '−' || equation.slice(-1) === "×" || equation.slice(-1) === "÷");
+    let valid = (equation.slice(-1) === "+" || equation.slice(-1) === '−' || equation.slice(-1) === "×" || equation.slice(-1) === "÷" || equation.slice(-1) === ",");
     if (valid && (equation+lastChar).slice(-2) === '+−' || (equation+lastChar).slice(-2) === '−−' || (equation+lastChar).slice(-2) === "×−" || (equation+lastChar).slice(-2) === "÷−") {
         valid = false;
         valid = !valid && (equation.charAt(equation.length - 1) === "−");
@@ -105,19 +111,16 @@ function openEx(){
     let equation = document.getElementById("equation");
     if (
         standard === true){
-        let calculator = document.getElementById("calculator-standard");
+        let calculator = document.getElementById("calculator-standart");
         calculator.id = "calculator-extended";
         extendedContainer.setAttribute("style","display:grid;")
-        standardContainer.setAttribute("style","padding:0 10px 10px 0;");
-        equation.setAttribute("style","with:265;")
+        standardContainer.setAttribute("style","padding:0 10px 10px 0;width:186px;");
     }else{
         let calculator = document.getElementById("calculator-extended");
-        calculator.id = "calculator-standard";
+        calculator.id = "calculator-standart";
         extendedContainer.setAttribute("style","display:none;");
-        standardContainer.setAttribute("style","padding:0 10px 10px 10px;");
-        equation.setAttribute("style","with:166;")
+        standardContainer.setAttribute("style","padding:0 10px 10px 10px;width:196px;");
     }
     standard = !standard;
 }
-
 main();
