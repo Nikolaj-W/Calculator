@@ -3,6 +3,7 @@
 let equation = "0";
 let ans;
 let standard = true;
+let startPosition = [];
 //main to set all event listener
 function main(){
     document.addEventListener("keydown", (event) => {keyboardInput(event)}, false);
@@ -13,8 +14,8 @@ function main(){
     Array.from(operators).forEach((i) => {i.addEventListener("click", () => addToEquation(i))});
     const solve = document.getElementsByClassName("solve");
     Array.from(solve).forEach((i) => {i.addEventListener("click", () => solveEquation())});
-
     document.getElementById("extended").addEventListener("click",openEx);
+    document.getElementById("controlLine").addEventListener("mousedown",startDrag);
 }
 //to add Characters to the global:equation
 function addToEquation(element){
@@ -123,4 +124,25 @@ function openEx(){
     }
     standard = !standard;
 }
+//functions to move the calculator
+function startDrag(e){
+    startPosition["x"] = e.clientX;
+    startPosition["y"] = e.clientY;
+    document.addEventListener("mousemove",drag);
+    document.addEventListener("mouseup",stopDrag);
+}
+function drag(e) {
+    let newX = e.clientX - startPosition["x"];
+    let newY = e.clientY - startPosition["y"];
+    let calculator = document.querySelector(".calculator");
+    calculator.setAttribute("style","left:"+(calculator.offsetLeft + newX)+"px;top:"+(calculator.offsetTop+newY)+"px;");
+    startPosition["x"] = e.clientX;
+    startPosition["y"] = e.clientY;
+}
+
+function stopDrag() {
+    document.removeEventListener("mousemove",drag);
+    document.removeEventListener("mouseup",stopDrag);
+}
+
 main();

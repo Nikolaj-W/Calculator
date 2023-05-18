@@ -52,11 +52,12 @@ body{
     box-sizing: border-box;
     margin: 0;
     align-content: center;
-    left: 500px;
-    top: 300px;
     box-sizing: border-box;
     height: 268px;
     grid-template-rows: repeat(3,1fr);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 #calculator-extended{
     width: 460px;
@@ -85,7 +86,7 @@ body{
     border-color: #274535;
     margin-top: 2px;
 }
-#controlButton > button{
+#controlLine > button{
     font-size: xx-small;
     width: 16px;
     height: 16px;
@@ -93,7 +94,7 @@ body{
     border-style: solid;
     border-radius: 50%;
 }
-#controlButton{
+#controlLine{
     width: 100%;
     grid-column: 1/ span 2;
 }
