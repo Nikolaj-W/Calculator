@@ -21,7 +21,7 @@ function addToEquation(element){
     console.log(standard)
     if ((equation.length <= 19 && standard) || (equation.length <= 53 && !standard)) {
         if (element.className === "mathOperator") {
-            if (!checkLastChar()){
+            if (!checkLastChar(element.textContent)){
                 if (ans !== undefined) {
                     equation += "Ans" + element.textContent;
                 } else {
@@ -41,9 +41,9 @@ function addToEquation(element){
 }
 //to set the events on the keys on the keyboard for the calculator
 function keyboardInput(event){
+    const keyInput = event.key;
     if ((equation.length <= 19 && standard) || (equation.length <= 53 && !standard)) {
-        const keyInput = event.key;
-        console.log(keyInput);
+        //console.log(keyInput);
         if ((Number(keyInput) >= 0 && Number(keyInput) <= 9) && keyInput !== 'Backspace') {
             removeStartingZero();
             equation += Number(keyInput);
@@ -52,15 +52,8 @@ function keyboardInput(event){
             }
             document.getElementById("equation").textContent = equation;
         }
-        if (keyInput === 'Backspace') {
-            equation = equation.slice(0, -1);
-            if (equation.toString().length === 0) {
-                equation = "0";
-            }
-            document.getElementById("equation").textContent = equation;
-        }
         if (keyInput === "+" || keyInput === "-" || keyInput === "*" || keyInput === "/") {
-            if (!checkLastChar()) {
+            if (checkLastChar(keyInput === "-" ? "−" : keyInput === "*" ? "×" : keyInput === "/" ? "÷" : "+") === false) {
                 if (ans !== undefined) {
                     equation += "Ans" + (keyInput === "-" ? "−" : keyInput === "*" ? "×" : keyInput === "/" ? "÷" : "+");
                 } else {
@@ -75,6 +68,13 @@ function keyboardInput(event){
         if (keyInput === "Control") {
             openEx();
         }
+    }
+    if (keyInput === 'Backspace') {
+        equation = equation.slice(0, -1);
+        if (equation.toString().length === 0) {
+            equation = "0";
+        }
+        document.getElementById("equation").textContent = equation;
     }
 }
 //execute the equation
@@ -91,8 +91,13 @@ function solveEquation(){
 function removeStartingZero(){
     equation = (equation === "0") ? "" : equation;
 }
-function checkLastChar() {
-    return equation.slice(-2) === '+−' || equation.slice(-2) === '−' || equation.slice(-2) === "×−" || equation.slice(-2) === "÷−";
+function checkLastChar(lastChar) {
+    let valid = (equation.slice(-1) === "+" || equation.slice(-1) === '−' || equation.slice(-1) === "×" || equation.slice(-1) === "÷");
+    if (valid && (equation+lastChar).slice(-2) === '+−' || (equation+lastChar).slice(-2) === '−−' || (equation+lastChar).slice(-2) === "×−" || (equation+lastChar).slice(-2) === "÷−") {
+        valid = false;
+        valid = !valid && (equation.charAt(equation.length - 1) === "−");
+    }
+    return valid;
 }
 function openEx(){
     let extendedContainer = document.getElementById("extendedKeypadContainer");
