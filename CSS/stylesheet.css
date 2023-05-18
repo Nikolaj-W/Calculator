@@ -1,0 +1,109 @@
+body{
+    background-color: darkcyan;
+}
+*{
+    color:#e6e6e7;
+    margin: 0;
+}
+#numericKeypadContainer{
+    width:  186px;
+    height: 220px;
+    display: grid;
+    gap: 2px;
+
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(4,1fr);
+
+    box-sizing: border-box;
+    padding: 0 10px 10px 10px;
+
+}
+#numericKeypadContainer > button:not(#id-0),#extendedKeypadContainer > button{
+    font-weight: bolder;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+    border-style: none;
+    box-sizing: border-box;
+}
+.number{
+    background-color: #5b5a5e;
+}
+.mathFunction,#extendedKeypadContainer>button{
+    background-color: #393940;
+}
+.mathOperator,#equals{
+    background-color: #ff9f0a;
+}
+#id-0{
+    font-weight: bolder;
+    height: 40px;
+    width: 85px;
+    text-align: center;
+    border-style: none;
+    box-sizing: border-box;
+    grid-column: 1/ span 2;
+}
+.calculator{
+    display: grid;
+    position: absolute;
+    background-color: #27272f;
+    box-sizing: border-box;
+    margin: 0;
+    align-content: center;
+    left: 500px;
+    top: 300px;
+    box-sizing: border-box;
+    height: 268px;
+    grid-template-rows: repeat(3,1fr);
+}
+#calculator-extended{
+    width: 456px;
+    grid-template-columns: 59% 41%;
+    border-radius: 10px;
+}
+#calculator-standart{
+    width: 186px;
+    border-radius: 10px;
+}
+#equation{
+    float: left;
+    text-align: right;
+    padding: 5px 12px 5px;
+    grid-column: 1/ span 2;
+}
+#close{
+    border-color: #5e353a;
+    background-color: #ff5f57;
+    margin-left: 3px;
+    margin-top: 2px;
+}
+#extended{
+    background-color: #29c940;
+    border-color: #274535;
+    margin-top: 2px;
+}
+#controlButton > button{
+    font-size: xx-small;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    border-style: solid;
+    border-radius: 50%;
+}
+#controlButton{
+    width: 100%;
+    grid-column: 1/ span 2;
+}
+#extendedKeypadContainer{
+    display: none;
+    gap: 2px;
+    width: 268px;
+    height: 220px;
+
+    grid-template-columns: repeat(6,1fr);
+    grid-template-rows: repeat(4,1fr);
+
+    box-sizing: border-box;
+    padding: 0 0 10px 10px;
+}

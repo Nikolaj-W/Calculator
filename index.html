@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rechner</title>
+    <comment><ion-icon name="calculator-outline"></ion-icon></comment>
+    <link rel="stylesheet" href="CSS/stylesheet.css">
+    <script src="https://cdn.jsdelivr.net/npm/expr-eval@2.0.2/dist/bundle.min.js"></script>
+</head>
+<body>
+    <div id="calculator-standart" class="calculator">
+        <div id="controlButton">
+            <button id="close"> </button>
+            <button id="extended"> </button>
+        </div>
+        <div id="equation">
+            <h3> </h3>
+        </div>
+        <div id="extendedKeypadContainer">
+            <button id="id-(">(</button>
+            <button id="id-)">)</button>
+            <button id="mc">mc</button>
+            <button id="m+">m+</button>
+            <button id="m-">m-</button>
+            <button id="mr">mr</button>
+            <button id="2^nd">2ⁿᵈ</button>
+            <button id="x^2">x²</button>
+            <button id="x^3">x³</button>
+            <button id="x^y">xʸ</button>
+            <button id="e^x">ℯˣ</button>
+            <button id="10^x">10ˣ</button>
+            <button id="1/x">¹/x</button>
+            <button id="2rx">√x</button>
+            <button id="3rx">³√x</button>
+            <button id="nrx">ⁿ√x</button>
+            <button id="ln">ln</button>
+            <button id="log10">log</button>
+            <button id="fakultät">x!</button>
+            <button id="sin">sin</button>
+            <button id="cos">cos</button>
+            <button id="tan">tan</button>
+            <button id="e">ℯ</button>
+            <button id="EE">EE</button>
+            <button id="Rad">Rad</button>
+            <button id="sinh">sinh</button>
+            <button id="cosh">cosh</button>
+            <button id="tanh">tanh</button>
+            <button id="pi">π</button>
+            <button id="Rand">Rand</button>
+        </div>
+        <div id="numericKeypadContainer">
+            <button id="c" class="mathFunction" class="gridItem">c</button>
+            <button id="changeTheSign" class="mathFunction">+/-</button>
+            <button id="procent" class="mathFunction">%</button>
+            <button id="division" class="mathOperator">÷</button>
+            <button id="id-7" class="number">7</button>
+            <button id="id-8" class="number">8</button>
+            <button id="id-9" class="number">9</button>
+            <button id="multiplication" class="mathOperator">×</button>
+            <button id="id-4" class="number">4</button>
+            <button id="id-5" class="number">5</button>
+            <button id="id-6" class="number">6</button>
+            <button id="minus" class="mathOperator">−</button>
+            <button id="id-1" class="number">1</button>
+            <button id="id-2" class="number">2</button>
+            <button id="id-3" class="number">3</button>
+            <button id="addition" class="mathOperator">+</button>
+            <button id="id-0" class="number">0</button>
+            <button id="comma" class="number">,</button>
+            <button id="equals" class = "solve">=</button>
+        </div>
+    </div>
+    <script defer src="JavaScript/calculator.js" type="module"></script>
+</body>
+</html>
