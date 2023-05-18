@@ -32,6 +32,9 @@ function addToEquation(element){
         } else {
             removeStartingZero();
             equation += element.textContent;
+            if (!equation.includes("Ans")) {
+                ans = undefined;
+            }
             document.getElementById("equation").textContent = equation;
         }
     }
