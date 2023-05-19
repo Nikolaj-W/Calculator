@@ -14,6 +14,8 @@ function main(){
     Array.from(operators).forEach((i) => {i.addEventListener("click", () => addToEquation(i))});
     const solve = document.getElementsByClassName("solve");
     Array.from(solve).forEach((i) => {i.addEventListener("click", () => solveEquation())});
+    const mathFunction = document.getElementsByClassName("mathFunction");
+    Array.from(mathFunction).forEach((i)=> {i.addEventListener("click", () => addToEquation(i))});
     document.getElementById("extended").addEventListener("click",openEx);
     document.getElementById("controlLine").addEventListener("mousedown",startDrag);
 }
@@ -28,6 +30,14 @@ function addToEquation(element){
                     equation += element.textContent;
                 }
             }
+            document.getElementById("equation").textContent = equation;
+        } else if (element.id === "comma"){
+            if (!checkLastChar(element.textContent) && !checkForDuplicateCommas() && equation !== "0"){
+                equation += ",";
+                document.getElementById("equation").textContent = equation;
+            }
+        } else if (element.id === "c") {
+            equation = "0";
             document.getElementById("equation").textContent = equation;
         } else {
             removeStartingZero();
@@ -69,10 +79,14 @@ function keyboardInput(event){
             openEx();
         }
         if (keyInput === ","){
-            if (!checkLastChar(keyInput) && equation !== "0"){
+            if (!checkLastChar(keyInput) && !checkForDuplicateCommas() && equation !== "0"){
                 equation += ",";
                 document.getElementById("equation").textContent = equation;
             }
+        }
+        if (keyInput === "c") {
+            equation = "0";
+            document.getElementById("equation").textContent = equation;
         }
     }
     if (keyInput === 'Backspace') {
@@ -90,8 +104,9 @@ function solveEquation(){
         document.getElementById("equation").textContent = equation === "" ? ans : equation !== "" ? equation : "0";
     } else {
         equation = equation.replaceAll(",", ".");
-        document.getElementById("equation").textContent =eval(equation);
-        ans = eval(equation);
+        equation = eval(equation).toString();
+        document.getElementById("equation").textContent = equation.replace(".",",");
+        ans = equation
         equation = "";
     }
 }
@@ -105,6 +120,19 @@ function checkLastChar(lastChar) {
         valid = !valid && (equation.charAt(equation.length - 1) === "−");
     }
     return valid;
+}
+//check for duplicates Commas for valid equation string
+function checkForDuplicateCommas(){
+    let temp = 0;
+    for (let i = 0; i < equation.length; i++) {
+        if (equation.charAt(i) === '+' || equation.charAt(i) === '−' || equation.charAt(i) === "×" || equation.charAt(i) === "÷" ) {
+            temp = 0;
+        }
+        if (equation.charAt(i) === ",") {
+            temp++;
+        }
+    }
+    return (temp >= 1);
 }
 function openEx(){
     let extendedContainer = document.getElementById("extendedKeypadContainer");
@@ -139,7 +167,6 @@ function drag(e) {
     startPosition["x"] = e.clientX;
     startPosition["y"] = e.clientY;
 }
-
 function stopDrag() {
     document.removeEventListener("mousemove",drag);
     document.removeEventListener("mouseup",stopDrag);
