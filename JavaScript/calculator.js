@@ -134,6 +134,7 @@ function checkForDuplicateCommas(){
     }
     return (temp >= 1);
 }
+//when calculator expend change
 function openEx(){
     let extendedContainer = document.getElementById("extendedKeypadContainer");
     let standardContainer = document.getElementById("numericKeypadContainer");
@@ -171,5 +172,4 @@ function stopDrag() {
     document.removeEventListener("mousemove",drag);
     document.removeEventListener("mouseup",stopDrag);
 }
-
 main();

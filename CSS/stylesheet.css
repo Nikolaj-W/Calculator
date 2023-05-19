@@ -5,45 +5,6 @@ body{
     color:#e6e6e7;
     margin: 0;
 }
-#numericKeypadContainer{
-    width:  196px;
-    height: 220px;
-    display: grid;
-    gap: 2px;
-
-    grid-template-columns: repeat(4,1fr);
-    grid-template-rows: repeat(4,1fr);
-
-    box-sizing: border-box;
-    padding: 0 10px 10px 10px;
-
-}
-#numericKeypadContainer > button:not(#id-0),#extendedKeypadContainer > button{
-    font-weight: bolder;
-    height: 40px;
-    width: 42px;
-    text-align: center;
-    border-style: none;
-    box-sizing: border-box;
-}
-.number{
-    background-color: #5b5a5e;
-}
-.mathFunction,#extendedKeypadContainer>button{
-    background-color: #393940;
-}
-.mathOperator,#equals{
-    background-color: #ff9f0a;
-}
-#id-0{
-    width: 86.5px;
-    font-weight: bolder;
-    height: 40px;
-    text-align: center;
-    border-style: none;
-    box-sizing: border-box;
-    grid-column: 1/ span 2;
-}
 .calculator{
     display: grid;
     grid-column-gap: 2px;
@@ -69,23 +30,6 @@ body{
     width: 196px;
     border-radius: 10px;
 }
-#equation{
-    float: left;
-    text-align: right;
-    padding: 5px 10px 5px;
-    grid-column: 1/ span 2;
-}
-#close{
-    border-color: #5e353a;
-    background-color: #ff5f57;
-    margin-left: 3px;
-    margin-top: 2px;
-}
-#extended{
-    background-color: #29c940;
-    border-color: #274535;
-    margin-top: 2px;
-}
 #controlLine > button{
     font-size: xx-small;
     width: 16px;
@@ -98,6 +42,35 @@ body{
     width: 100%;
     grid-column: 1/ span 2;
 }
+#controlLine > button:not(#extended){
+    margin-left: 3px;
+    margin-top: 2px;
+}
+#controlLine > button:not(#close){
+    margin-top: 2px;
+}
+#close{
+    border-color: #5e353a;
+    background-color: #ff5f57;
+}
+#close:active{
+    border-color: #5e353a;
+    background-color: #cc5f57;
+}
+#extended{
+    background-color: #29c940;
+    border-color: #274535;
+}
+#extended:active{
+    background-color: #298640;
+    border-color: #274535;
+}
+#equation{
+    float: left;
+    text-align: right;
+    padding: 5px 10px 5px;
+    grid-column: 1/ span 2;
+}
 #extendedKeypadContainer{
     display: none;
     gap: 2px;
@@ -108,4 +81,52 @@ body{
 
     box-sizing: border-box;
     padding: 0 0 10px 10px;
+}
+#numericKeypadContainer{
+    width:  196px;
+    height: 220px;
+    display: grid;
+    gap: 2px;
+
+    grid-template-columns: repeat(4,1fr);
+    grid-template-rows: repeat(4,1fr);
+
+    box-sizing: border-box;
+    padding: 0 10px 10px 10px;
+
+}
+#numericKeypadContainer > button:not(#id-0),#extendedKeypadContainer > button {
+    font-weight: bolder;
+    height: 40px;
+    width: 42px;
+    text-align: center;
+    border-style: none;
+    box-sizing: border-box;
+}
+.number{
+    background-color: #5b5a5e;
+}
+.number:active{
+    background-color: #9f9ea0;
+}
+.mathFunction,#extendedKeypadContainer>button{
+    background-color: #393940;
+}
+.mathFunction:active,#extendedKeypadContainer>button:active{
+    background-color: #5b5a5e;
+}
+.mathOperator,#equals{
+    background-color: #ff9f0a;
+}
+.mathOperator:active,#equals:active{
+    background-color: #ca7c06;
+}
+#id-0{
+    width: 86.5px;
+    font-weight: bolder;
+    height: 40px;
+    text-align: center;
+    border-style: none;
+    box-sizing: border-box;
+    grid-column: 1/ span 2;
 }
