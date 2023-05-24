@@ -23,7 +23,7 @@ function main(){
 function addToEquation(element){
     if ((equation.length <= 19 && standard) || (equation.length <= 53 && !standard)) {
         if (element.className === "mathOperator") {
-            if (!checkLastChar(element.textContent)){
+            if (!checkLastChar(element.textContent)) {
                 if (ans !== undefined) {
                     equation += "Ans" + element.textContent;
                 } else {
@@ -31,8 +31,8 @@ function addToEquation(element){
                 }
             }
             document.getElementById("equation").textContent = equation;
-        } else if (element.id === "comma"){
-            if (!checkLastChar(element.textContent) && !checkForDuplicateCommas() && equation !== "0"){
+        } else if (element.id === "comma") {
+            if (!checkLastChar(element.textContent) && !checkForDuplicateCommas() && equation !== "0") {
                 equation += ",";
                 document.getElementById("equation").textContent = equation;
             }
@@ -52,42 +52,13 @@ function addToEquation(element){
 //to set the events on the keys on the keyboard for the calculator
 function keyboardInput(event){
     const keyInput = event.key;
-    if ((equation.length <= 19 && standard) || (equation.length <= 53 && !standard)) {
-        console.log(keyInput);
-        if ((Number(keyInput) >= 0 && Number(keyInput) <= 9) && keyInput !== 'Backspace') {
-            removeStartingZero();
-            equation += Number(keyInput);
-            if (!equation.includes("Ans")) {
-                ans = undefined;
-            }
-            document.getElementById("equation").textContent = equation;
-        }
-        if (keyInput === "+" || keyInput === "-" || keyInput === "*" || keyInput === "/") {
-            if (!checkLastChar(keyInput === "-" ? "−" : keyInput === "*" ? "×" : keyInput === "/" ? "÷" : "+")) {
-                if (ans !== undefined) {
-                    equation += "Ans" + (keyInput === "-" ? "−" : keyInput === "*" ? "×" : keyInput === "/" ? "÷" : "+");
-                } else {
-                    equation += keyInput === "-" ? "−" : keyInput === "*" ? "×" : keyInput === "/" ? "÷" : "+";
-                }
-            }
-            document.getElementById("equation").textContent = equation;
-        }
-        if (keyInput === "Enter") {
-            solveEquation();
-        }
-        if (keyInput === "Control") {
-            openEx();
-        }
-        if (keyInput === ","){
-            if (!checkLastChar(keyInput) && !checkForDuplicateCommas() && equation !== "0"){
-                equation += ",";
-                document.getElementById("equation").textContent = equation;
-            }
-        }
-        if (keyInput === "c") {
-            equation = "0";
-            document.getElementById("equation").textContent = equation;
-        }
+    if (keyInput === "Enter") {
+        solveEquation();
+        return;
+    }
+    if (keyInput === "Control") {
+        openEx();
+        return;
     }
     if (keyInput === 'Backspace') {
         equation = equation.slice(0, -1);
@@ -96,6 +67,54 @@ function keyboardInput(event){
         }
         document.getElementById("equation").textContent = equation;
     }
+    if (keyInput == "c"||keyInput=="C"){
+        equation = "0";
+        document.getElementById("equation").textContent = equation;
+    }
+    if ((equation.length <= 19 && standard) || (equation.length <= 53 && !standard)) {
+        switch (keyInput){
+            case"0":case"1":case"2":case"3":case"4":case"5":case"6":case"7":case"8":case"9":
+                removeStartingZero();
+                equation += Number(keyInput);
+                if (equation.includes("Ans")){
+                    ans = undefined;
+                }
+                break;
+            case"+":case"*":case"/":case"-":
+                removeStartingZero();
+                if (checkLastChar(keyInput)){
+                    return;
+                }
+                if (ans !== undefined) {
+                    equation += "Ans" + (keyInput === "-" ? "−" : keyInput === "*" ? "×" : keyInput === "/" ? "÷" : "+");
+                } else {
+                    equation += keyInput === "-" ? "−" : keyInput === "*" ? "×" : keyInput === "/" ? "÷" : "+";
+                }
+                break;
+            case",":
+                if (!checkLastChar(keyInput) && !checkForDuplicateCommas()){
+                    equation += ",";
+                }
+                break;
+            case "(":
+                equation += "(";
+                break;
+            case ")":
+                equation += ")";
+                break;
+            case "!":
+                if ((equation.slice(-2) !== "-(")) {
+                    equation = "−(" + equation + ")";
+                } else {
+                    equation = equation.slice(2).slice(-1);
+                }
+                break;
+            default:
+                console.log(keyInput+ ":Ist noch nicht verfügbar!");
+                return;
+        }
+    }
+    document.getElementById("equation").textContent = equation;
 }
 //execute the equation
 function solveEquation(){
