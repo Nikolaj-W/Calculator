@@ -30,24 +30,31 @@ function addToEquation(element){
                     equation += element.textContent;
                 }
             }
-            document.getElementById("equation").textContent = equation;
         } else if (element.id === "comma") {
-            if (!checkLastChar(element.textContent) && !checkForDuplicateCommas() && equation !== "0") {
+            if (!checkLastChar(element.textContent) && !checkForDuplicateCommas()) {
                 equation += ",";
-                document.getElementById("equation").textContent = equation;
             }
         } else if (element.id === "c") {
             equation = "0";
-            document.getElementById("equation").textContent = equation;
+        } else if (element.id === "changeTheSign") {
+            if (ans === undefined) {
+                equation = "−(" + equation + ")";
+            } else if (equation.slice(0, 2) === "−(" && equation.slice(-1) === ")") {
+                equation = equation.slice(2,equation.length-1);
+            }else if (ans !== undefined) {
+                equation = "−(" + ans + ")";
+            }
+        } else if (element.id === "id-(" || element.id === "id-)") {
+            equation += element.textContent;
         } else {
             removeStartingZero();
             equation += element.textContent;
             if (!equation.includes("Ans")) {
                 ans = undefined;
             }
-            document.getElementById("equation").textContent = equation;
         }
     }
+    document.getElementById("equation").textContent = equation;
 }
 //to set the events on the keys on the keyboard for the calculator
 function keyboardInput(event){
@@ -67,7 +74,7 @@ function keyboardInput(event){
         }
         document.getElementById("equation").textContent = equation;
     }
-    if (keyInput == "c"||keyInput=="C"){
+    if (keyInput === "c" || keyInput==="C"){
         equation = "0";
         document.getElementById("equation").textContent = equation;
     }
@@ -76,19 +83,14 @@ function keyboardInput(event){
             case"0":case"1":case"2":case"3":case"4":case"5":case"6":case"7":case"8":case"9":
                 removeStartingZero();
                 equation += Number(keyInput);
-                if (equation.includes("Ans")){
-                    ans = undefined;
-                }
                 break;
             case"+":case"*":case"/":case"-":
-                removeStartingZero();
-                if (checkLastChar(keyInput)){
-                    return;
-                }
-                if (ans !== undefined) {
-                    equation += "Ans" + (keyInput === "-" ? "−" : keyInput === "*" ? "×" : keyInput === "/" ? "÷" : "+");
-                } else {
-                    equation += keyInput === "-" ? "−" : keyInput === "*" ? "×" : keyInput === "/" ? "÷" : "+";
+                if (!checkLastChar(keyInput === "-" ? "−" : keyInput === "*" ? "×" : keyInput === "/" ? "÷" : "+")){
+                    if (!equation.slice(-1).match(/[0-9]/) && ans !== undefined) {
+                        equation += "Ans" + (keyInput === "-" ? "−" : keyInput === "*" ? "×" : keyInput === "/" ? "÷" : "+");
+                    } else {
+                        equation += keyInput === "-" ? "−" : keyInput === "*" ? "×" : keyInput === "/" ? "÷" : "+";
+                    }
                 }
                 break;
             case",":
@@ -103,10 +105,12 @@ function keyboardInput(event){
                 equation += ")";
                 break;
             case "!":
-                if ((equation.slice(-2) !== "-(")) {
+                if (ans === undefined) {
                     equation = "−(" + equation + ")";
-                } else {
-                    equation = equation.slice(2).slice(-1);
+                } else if (equation.slice(0, 2) === "−(" && equation.slice(-1) === ")") {
+                    equation = equation.slice(2,equation.length-1);
+                }else if (ans !== undefined) {
+                    equation = "−(" + ans + ")";
                 }
                 break;
             default:
@@ -133,12 +137,19 @@ function removeStartingZero(){
     equation = (equation === "0") ? "" : equation;
 }
 function checkLastChar(lastChar) {
-    let valid = (equation.slice(-1) === "+" || equation.slice(-1) === '−' || equation.slice(-1) === "×" || equation.slice(-1) === "÷" || equation.slice(-1) === ",");
-    if (valid && (equation+lastChar).slice(-2) === '+−' || (equation+lastChar).slice(-2) === '−−' || (equation+lastChar).slice(-2) === "×−" || (equation+lastChar).slice(-2) === "÷−") {
-        valid = false;
-        valid = !valid && (equation.charAt(equation.length - 1) === "−");
+    if (equation !== "") {
+        let valid = equation.slice(-1).match(/[\+−×÷]/)
+        if (valid && (equation+lastChar).slice(-2).match(/[\+×÷]−/)) {
+            valid = false;
+            valid = !valid && (equation.charAt(equation.length - 1) === "−");
+        } else if (valid && (equation+lastChar).slice(-2).match(/[\+−×÷],/)) {
+            equation += 0;
+            valid = false;
+        }
+        return valid;
+    } else {
+        return !(ans !== undefined);
     }
-    return valid;
 }
 //check for duplicates Commas for valid equation string
 function checkForDuplicateCommas(){
