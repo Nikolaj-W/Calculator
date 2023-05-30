@@ -37,7 +37,7 @@ function addToEquation(element){
         } else if (element.id === "c") {
             equation = "0";
         } else if (element.id === "changeTheSign") {
-            if (ans === undefined) {
+            if (ans === undefined && (equation.slice(0, 2) !== "−(" && equation.slice(-1) !== ")")) {
                 equation = "−(" + equation + ")";
             } else if (equation.slice(0, 2) === "−(" && equation.slice(-1) === ")") {
                 equation = equation.slice(2,equation.length-1);
@@ -105,7 +105,7 @@ function keyboardInput(event){
                 equation += ")";
                 break;
             case "!":
-                if (ans === undefined) {
+                if (ans === undefined && (equation.slice(0, 2) !== "−(" && equation.slice(-1) !== ")")) {
                     equation = "−(" + equation + ")";
                 } else if (equation.slice(0, 2) === "−(" && equation.slice(-1) === ")") {
                     equation = equation.slice(2,equation.length-1);
